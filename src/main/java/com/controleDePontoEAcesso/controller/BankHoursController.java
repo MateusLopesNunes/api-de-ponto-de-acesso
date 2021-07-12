@@ -1,0 +1,57 @@
+package com.controleDePontoEAcesso.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.controleDePontoEAcesso.model.BankHours;
+import com.controleDePontoEAcesso.model.service.BankHoursService;
+import com.controleDePontoEAcesso.model.service.BankHoursService;
+import com.controleDePontoEAcesso.util.exception.NotFoundException;
+
+import lombok.AllArgsConstructor;
+
+@RestController
+@RequestMapping("/bankHours")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
+public class BankHoursController {
+	
+	private BankHoursService bankHoursService;
+	
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public BankHours create(@RequestBody BankHours obj) {
+		return bankHoursService.create(obj);
+	}
+	
+	@GetMapping
+	public List<BankHours> findAll() {
+		return bankHoursService.findAll();
+	}
+	
+	@GetMapping("/{id}")
+	public BankHours findById(@PathVariable Long id) throws NotFoundException {
+		return bankHoursService.findById(id);
+	}
+	
+	@PutMapping("/{id}")
+	public BankHours update(@PathVariable Long id, @RequestBody BankHours obj) throws NotFoundException {
+		return bankHoursService.update(id, obj);
+	}
+	
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteById(@PathVariable Long id) throws NotFoundException {
+		bankHoursService.deleteById(id);
+	}
+}
